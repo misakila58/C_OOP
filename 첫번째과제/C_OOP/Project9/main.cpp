@@ -1,5 +1,3 @@
-#include "player.h"
-
 //1. 플레이어는 방향성을 가진다.오른쪽으로 이동하고자 한다면 머리방향이 먼저 오른쪽으로 방향전환한 후 이동한다.머리 방향이 전환되었다는 것을 확인하기 위해 머리모양에 해당하는 그림을 표시하도록 한다.
 //2. 플레이어는 공격시에 현재 방향으로만 공격가능하다.
 //3. 플레이어의 공격 무기로는(1) 총, (2) 레이저건 이 있다.총은 단발의 데미지량은 1인 반면 레이저건의 데미지량은 2초간 지속적으로 데미지를 준다.레어저건의 초당 데미지량은 1에 해당한다.레이저건의 경우, 
@@ -16,3 +14,51 @@
 //13. 적, 플레이어는 모두 hp를 가지며 적은 5, 플레이어는 10만큼 갖는다.
 //14. 플레이어가 죽은 시점에 게임은 종료되며 플레이어가 살아 있었던 시간과 죽인 적들의 개수를 화면에 보여준 후 게임을 종료한다.
 //15. 플레이어의 공격시 공격방향으로 여러 적들이 있으면 가장 가까운 적부터 공격한다.
+
+#include "stdafx.h"
+#include "player.h"
+#include "enemy.h"
+#include "bullet.h"
+
+using namespace std;
+
+int main()
+{
+	Screen screen{ 80 };
+	Player player = { 30, "(^_^)", &screen };
+	Enemy enemy{ 60, "(*--*)", &screen };
+	Bullet bullet(-1, "+", &screen);
+
+	while (true)
+	{
+		screen.clear();
+
+		if (_kbhit())
+		{
+			int c = _getch();
+			switch (c) {
+			case 'a':
+				player.moveLeft();
+				break;
+			case 'd':
+				player.moveRight();
+				break;
+			case ' ':
+				bullet.fire(player.getPosition());
+				break;
+			}
+		}
+		player.draw();
+		enemy.draw();
+		bullet.draw();
+
+		player.update();
+		enemy.update();
+		bullet.update(enemy.getPosition());
+
+		screen.render();
+		Sleep(66);
+	}
+
+	return 0;
+}
