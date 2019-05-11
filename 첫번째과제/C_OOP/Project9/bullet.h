@@ -2,9 +2,11 @@
 #include "gameObject.h"
 #include "screen.h"
 #include "stdafx.h"
+#include "bullet.h"
+#include "player.h"
 
 
-class Bullet : public GameObject {
+class Bullet : public GameObject   {
 	bool isFiring;
 
 public:
@@ -29,15 +31,47 @@ public:
 		GameObject::draw();
 	}
 
-	void fire(int player_pos)
+	void fire(int player_pos,bool direction,int faceLen)
 	{
 		isFiring = true;
-		setPosition(player_pos);
+		if (direction == true)
+		{
+			setPosition(player_pos - 1);
+			setLeft(); //Bullet¿« Left∞° true
+		}
+			
+		else
+		{
+			setPosition(player_pos + faceLen);
+			setRight();
+		}
+		
+
 	}
 
 	void update(int enemy_pos)
 	{
 		if (isFiring == false) return;
+
+		int pos = getPosition();
+
+		if (getLeft() == true)
+		{
+			pos = pos - 1;
+		}
+		else if (getRight() == true)
+		{
+			pos = pos + 1;
+		}
+
+		if (pos == enemy_pos)
+		{
+			isFiring = false;
+		}
+		setPosition(pos); 
+		
+
+	/*	if (isFiring == false) return;
 		int pos = getPosition();
 		if (pos < enemy_pos) {
 			pos = pos + 1;
@@ -48,6 +82,6 @@ public:
 		else {
 			isFiring = false;
 		}
-		setPosition(pos);
+		setPosition(pos);*/
 	}
 };

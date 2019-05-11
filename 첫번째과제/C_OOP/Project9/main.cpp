@@ -44,7 +44,7 @@ int main()
 				player.moveRight();
 				break;
 			case ' ':
-				bullet.fire(player.getPosition());
+				bullet.fire(player.getPosition(), player.getLeft(),player.getFace());
 				break;
 			}
 		}

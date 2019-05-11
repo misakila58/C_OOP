@@ -4,22 +4,18 @@
 
 void Player::seeLeft()
 {
-	right = false;
-	left = true;
-
+	setLeft();
 }
 
 void Player::seeRight()
 {
-	left = false;
-	right = true;
+	setRight();
 }
-
 
 void Player::moveLeft()
 {
 	setface("<*.*)");
-	if (left == true)
+	if (getLeft() == true)
 		setPosition(getPosition() - 1);
 	seeLeft();
 }
@@ -27,7 +23,7 @@ void Player::moveLeft()
 void Player::moveRight()
 {
 	setface("(*.*>");
-	if(right == true)
+	if(getRight() == true)
 	setPosition(getPosition() + 1);
 	seeRight();
 }

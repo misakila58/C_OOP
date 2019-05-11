@@ -7,8 +7,7 @@
 class Player : public GameObject {
 
 private:
-	bool left;
-	bool right;
+
 
 public:
 	Player(int pos, const char* face, Screen* screen)
@@ -18,6 +17,7 @@ public:
 
 	void seeLeft();
 	void seeRight();
+	
 
 
 
