@@ -15,6 +15,11 @@ public:
 		strcpy(this->face, face);
 	}
 
+	void setface(const char* face)
+	{
+		strcpy(this->face, face);
+	}
+
 
 	int getPosition()
 	{

@@ -6,26 +6,26 @@
 
 class Player : public GameObject {
 
+private:
+	bool left;
+	bool right;
+
 public:
 	Player(int pos, const char* face, Screen* screen)
 		: GameObject(pos, face, screen)
 	{
 	}
 
+	void seeLeft();
+	void seeRight();
 
-	void moveLeft()
-	{
-		setPosition(getPosition() - 1);
-	}
 
-	void moveRight()
-	{
-		setPosition(getPosition() + 1);
-	}
 
-	void update()
-	{
+	void moveLeft();
 
-	}
+	void moveRight();
+
+
+	void update();
 
 };
