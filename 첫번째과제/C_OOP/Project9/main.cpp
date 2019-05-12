@@ -22,11 +22,13 @@
 
 int main()
 {
+	int a = 0;
 	Screen screen{ 80 };
 	Player player = { 30, "(^_^)", &screen,1 };
 	Enemy enemy{ 60, "(*--*)", &screen,3 };
-	Bullet bullet(-1, "+", &screen);
+	Bullet* bullets[10];
 
+	
 	while (true)
 	{
 		screen.clear();
@@ -45,18 +47,32 @@ int main()
 				player.changeweapon();
 				break;
 			case ' ':
-				bullet.fire(player.getPosition(), player.getLeft(),player.getFaceLen(),player.getWeapontype());
+						Bullet* bullet = new Bullet(-1, "+", &screen);
+						bullets[a] = bullet;
+						bullets[a]->fire(player.getPosition(), player.getLeft(), player.getFaceLen(), player.getWeapontype());
+						a++;
+						if (a == 9)
+							a = 0;
+
 				break;
 			}
 		}
 
 		player.draw();
 		enemy.draw();
-		bullet.draw();
-		
+
+		for (int i = 0; i < a; i++)
+		{
+			bullets[i]->draw();
+		}
 		player.update();
 		enemy.update();  
-		bullet.update(enemy.getPosition());
+		
+		for (int i = 0; i < a; i++)
+		{
+			bullets[i]->update(enemy.getPosition());
+		}
+		
 
 		screen.render();
 		Sleep(66);

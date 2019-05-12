@@ -7,12 +7,13 @@
 class Player : public GameObject {
 
 private:
-
+	int hp;
 
 public:
 	Player(int pos, const char* face, Screen* screen,int weapontype)
 		: GameObject(pos, face, screen)
 	{
+		hp = 10;
 	}
 
 	void seeLeft();

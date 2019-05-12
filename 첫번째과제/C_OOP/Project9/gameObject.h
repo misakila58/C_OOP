@@ -25,6 +25,11 @@ public:
 	{
 		strcpy(this->face, face);
 	}
+	char* getFace()
+	{
+		return face;
+	}
+
 
 	void setWeapontype(int weapontype)
 	{
