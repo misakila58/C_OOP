@@ -20,13 +20,11 @@
 #include "enemy.h"
 #include "bullet.h"
 
-using namespace std;
-
 int main()
 {
 	Screen screen{ 80 };
-	Player player = { 30, "(^_^)", &screen };
-	Enemy enemy{ 60, "(*--*)", &screen };
+	Player player = { 30, "(^_^)", &screen,1 };
+	Enemy enemy{ 60, "(*--*)", &screen,3 };
 	Bullet bullet(-1, "+", &screen);
 
 	while (true)
@@ -43,17 +41,21 @@ int main()
 			case 'd':
 				player.moveRight();
 				break;
+			case 'm':
+				player.changeweapon();
+				break;
 			case ' ':
-				bullet.fire(player.getPosition(), player.getLeft(),player.getFace());
+				bullet.fire(player.getPosition(), player.getLeft(),player.getFaceLen(),player.getWeapontype());
 				break;
 			}
 		}
+
 		player.draw();
 		enemy.draw();
 		bullet.draw();
-
+		
 		player.update();
-		enemy.update();
+		enemy.update();  
 		bullet.update(enemy.getPosition());
 
 		screen.render();
@@ -62,3 +64,4 @@ int main()
 
 	return 0;
 }
+

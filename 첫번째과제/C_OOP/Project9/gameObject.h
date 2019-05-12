@@ -4,26 +4,39 @@
 
 
 class GameObject {
+private:
 	int pos;
 	char face[20];
 	Screen* screen;
 	bool left;
 	bool right;
+	int weapontype;
 
 public:
 	GameObject(int pos, const char* face, Screen* screen)
 		: pos(pos), screen(screen)
 	{
 		left = false, right = false;
+		weapontype = 1;
 		strcpy(this->face, face);
 	}
 
-	void setface(const char* face)
+	void setFace(const char* face)
 	{
 		strcpy(this->face, face);
 	}
-	
-	int getFace()
+
+	void setWeapontype(int weapontype)
+	{
+		this->weapontype = weapontype;
+	}
+
+	int getWeapontype()
+	{
+		return weapontype;
+	}
+
+	int getFaceLen()
 	{
 		return strlen(this->face);
 	}

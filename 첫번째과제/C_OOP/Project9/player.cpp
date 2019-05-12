@@ -14,7 +14,7 @@ void Player::seeRight()
 
 void Player::moveLeft()
 {
-	setface("<*.*)");
+	setFace("<*.*)");
 	if (getLeft() == true)
 		setPosition(getPosition() - 1);
 	seeLeft();
@@ -22,7 +22,7 @@ void Player::moveLeft()
 
 void Player::moveRight()
 {
-	setface("(*.*>");
+	setFace("(*.*>");
 	if(getRight() == true)
 	setPosition(getPosition() + 1);
 	seeRight();
@@ -30,4 +30,13 @@ void Player::moveRight()
 
 void Player::update()
 {
+}
+
+void Player::changeweapon()
+{
+	int weapontype = getWeapontype();
+	weapontype += 1;
+	setWeapontype(weapontype % 2);
+
+
 }

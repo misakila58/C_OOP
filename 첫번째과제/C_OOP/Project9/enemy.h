@@ -6,7 +6,7 @@
 class Enemy : public GameObject {
 
 public:
-	Enemy(int pos, const char* face, Screen* screen)
+	Enemy(int pos, const char* face, Screen* screen,int weapontype)
 		: GameObject(pos, face, screen)
 	{
 	}
