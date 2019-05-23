@@ -257,7 +257,8 @@ int main()
 		screen.render();
 		Sleep(66);
 	}
-
+	
+	delete player,enemy,bullet;
 
 
 	return 0;
