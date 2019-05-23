@@ -85,9 +85,14 @@ public:
 	{
 		this->pos = pos;
 	}
-	void draw()
+	virtual void draw()
 	{
 		screen.draw(pos, face);
+	}
+
+	virtual void update()
+	{
+
 	}
 };
 
@@ -148,10 +153,10 @@ public:
 
 class Bullet : public GameObject {
 	bool isFiring;
-
+	Enemy * enemy;
 public:
-	Bullet(int pos, const char* face, Screen& screen) 
-		: GameObject(pos, face, screen), isFiring(false)
+	Bullet(int pos, const char* face, Screen& screen,Enemy *enemy) 
+		: GameObject(pos, face, screen), isFiring(false),enemy(enemy)
 	{
 		
 	}
@@ -182,14 +187,14 @@ public:
 		setPosition(player_pos);
 	}
 
-	void update(int enemy_pos)
+	void update()
 	{
 		if (isFiring == false) return;
 		int pos = getPosition();
-		if (pos < enemy_pos) {
+		if (pos < enemy->getPosition()) {
 			pos = pos + 1;
 		}
-		else if (pos > enemy_pos) {
+		else if (pos > enemy->getPosition()) {
 			pos = pos - 1;
 		}
 		else {
@@ -205,12 +210,19 @@ public:
 int main()
 {
 	Screen screen{ 80 };
-
-	Player player = { 30, "(^_^)", screen };
-	Enemy enemy{ 60, "(*--*)", screen };
-	Bullet bullet( -1, "+", screen);
+			
+	Player *player = new Player(30, "(^_^)", screen);
+	Enemy *enemy = new Enemy{ 60, "(*--*)", screen };
+	Bullet *bullet = new Bullet( -1, "+", screen,enemy);
 	
-				
+	GameObject *gameobject[3];
+
+
+	
+	gameobject[0] = player;
+	gameobject[1] = enemy;
+	gameobject[2] = bullet;
+	
 	while (true)
 	{
 		screen.clear();
@@ -218,29 +230,35 @@ int main()
 		if (_kbhit())
 		{
 			int c = _getch();
+			Player * tPlayer = dynamic_cast<Player*>(gameobject[0]);
+			Bullet * tBullet = dynamic_cast<Bullet*>(gameobject[2]);
 			switch (c) {
 			case 'a':
-				player.moveLeft();
+				tPlayer->moveLeft();
 				break;
 			case 'd':
-				player.moveRight();
+				tPlayer->moveRight();
 				break;
 			case ' ':
-				bullet.fire(player.getPosition());
+				tBullet->fire(tPlayer->getPosition());
 				break;
 			}
 		}
-		player.draw();
-		enemy.draw();
-		bullet.draw();
 
-		player.update();
-		enemy.update();
-		bullet.update(enemy.getPosition());
-		
+		for (int i = 0; i < 3; i++)
+		{
+			gameobject[i]->draw();
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			gameobject[i]->update();
+		}
+
 		screen.render();
 		Sleep(66);
 	}
+
+
 
 	return 0;
 }
